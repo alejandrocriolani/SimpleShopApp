@@ -1,0 +1,58 @@
+﻿@using Almacen.Models.ViewModels;
+@model List<BasicOrderData>
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<div class="bg-primary text-white p-1 m-1"><h4>@ViewData["Title"]</h4></div>
+
+<table class="table table-striped table-hover table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <td>Cliente</td>
+            <td>Empleado</td>
+            <td>Fecha</td>
+            <td>Cantidad de productos</td>
+            <td>Precio Total</td>
+            <td>Acciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="6" class="text-center">No hay pedidos</td>
+            </tr>
+        }
+        else
+        {
+            foreach(BasicOrderData detail in Model)
+            {
+            <tr>
+                @if (detail.Client !=  null)
+                {
+                    <td>@detail.Client.LastName.ToString(), @detail.Client.Name.ToString()</td>
+                }
+                else
+                {
+                    <td>Vacío</td>
+                }
+                @if (detail.Employee != null)
+                {
+                    <td>@detail.Employee.LastName.ToString(), @detail.Employee.Name.ToString()</td>
+                }
+                else
+                {
+                    <td>Vacío</td>
+                }
+                <td>@detail.Order.OrderDateTime</td>
+                <td>@detail.Order.Lines.Count()</td>
+                <td>@detail.TotalPrice</td>
+                <td>
+                    <a asp-action="Details" asp-route-orderid="@detail.Order.Id" class="btn btn-success">Detalles</a>
+                </td>
+            </tr>   
+            }
+        }
+    </tbody>
+</table>

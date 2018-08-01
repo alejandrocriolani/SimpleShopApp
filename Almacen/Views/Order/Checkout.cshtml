@@ -1,0 +1,116 @@
+﻿@using Almacen.Models.ViewModels
+@model OrdersViewModel
+@{
+    ViewData["Title"] = "Comprobar datos";
+}
+
+<div class="bg-primary m-1 p-1 text-white"><h4>@ViewData["Title"]</h4></div>
+
+<div class="bg-dark m-1 p-1 text-white"><h5>Productos a comprar</h5></div>
+Verifique los datos.
+@if(Model.Cart.Lines.Count() > 0 )
+{
+<table class="table table-sm table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio por unidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (CartLine cart in Model.Cart.Lines)
+            {
+                <tr>
+                    <td>@cart.Product.Name</td>
+                    <td>@cart.Quantity</td>
+                    <td>@cart.Product.Price</td>
+                    <td>@(cart.Product.Price * cart.Quantity)</td>
+                </tr>
+             }
+        <tr>
+            <td colspan="3" class="text-right">Precio Total:</td>
+            <td>@Model.Cart.ComputeTotalValue()</td>
+        </tr>
+
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" asp-controller="Cart" class="btn btn-primary">Modificar carrito</a>
+
+<div class="bg-dark m-1 p-1 text-white"><h5>Sus datos</h5></div>
+Verifique los datos
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Checkout" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="User.Id" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Nombre de usuario</label>
+        <label>@Model.User.UserName</label>
+        <input type="hidden" asp-for="User.UserName" value="@Model.User.UserName" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Correo electrónico</label>
+        <label>@Model.User.Email</label>
+        <input type="hidden" asp-for="User.Email" value="@Model.User.Email" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Nombre</label>
+        <label>@Model.User.Name</label>
+        <input type="hidden" asp-for="User.Name" value="@Model.User.Name" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Apellido</label>
+        <label>@Model.User.LastName</label>
+        <input type="hidden" asp-for="User.LastName" value="@Model.User.LastName" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">DNI</label>
+        <label>@Model.User.DNI</label>
+        <input type="hidden" asp-for="User.DNI" value="@Model.User.DNI" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Dirección</label>
+        <label>@Model.User.Address</label>
+        <input type="hidden" asp-for="User.Address" value="@Model.User.Address" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Ciudad</label>
+        <label>@Model.User.City</label>
+        <input type="hidden" asp-for="User.City" value="@Model.User.City" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Código postal</label>
+        <label>@Model.User.ZipCode</label>
+        <input type="hidden" asp-for="User.ZipCode" value="@Model.User.ZipCode" />
+    </div>
+    <div class="form-group">
+        <label class="font-weight-bold">Provincia</label>
+        <label>@Model.User.Province</label>
+        <input type="hidden" asp-for="User.Province" value="@Model.User.Province" />
+    </div>
+
+    <a asp-controller="Account"
+       asp-action="Edit"
+       asp-route-username="@User.Identity.Name"
+       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()"
+       class="btn btn-primary text-white">
+        Editar Datos de Usuario
+    </a>
+
+
+    @if (!string.IsNullOrEmpty(Model.User.Name) &&
+     !string.IsNullOrEmpty(Model.User.LastName) &&
+     !string.IsNullOrEmpty(Model.User.Address) &&
+     !string.IsNullOrEmpty(Model.User.City) &&
+     !string.IsNullOrEmpty(Model.User.Province) &&
+     !string.IsNullOrEmpty(Model.User.ZipCode))
+    {
+        <div class="text-center">
+            <input class="btn btn-primary" type="submit" value="Comprar" />
+        </div>
+    }
+</form>

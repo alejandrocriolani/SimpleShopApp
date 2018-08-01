@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Administración - Inicio";
+}
+
+<div class="bg-primary m-1 p-1 text-white"><h4>@ViewData["Title"]</h4></div>
+
+@if(User.IsInRole("Admin") || User.IsInRole("Employee"))
+{
+    <div class="bg-info m-1 p-1 text-white"><h5>Pedidos</h5></div>
+
+    <a asp-controller="Order" 
+       asp-action="Index"
+       class="btn btn-primary text-white">
+    Ver pedidos
+</a>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="bg-info m-1 p-1 text-white"><h5>Usuarios</h5></div>
+    <a asp-action="Users" class="btn btn-primary text-white">Administrar usuarios</a>
+
+    <div class="bg-info m-1 p-1 text-white"><h5>Roles</h5></div>
+    <a asp-controller="RoleAdmin"
+       asp-action="Index"
+       class="btn btn-primary text-white">Administrar roles</a>
+}

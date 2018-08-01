@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+    <ul class="navbar-nav ml-auto">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item">
+                <a class="nav-link"
+                   asp-controller="Account"
+                   asp-action="Edit"
+                   asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()"
+                   asp-route-username="@User.Identity.Name">@User.Identity.Name</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="\Account\Logout">Salir</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path" class="nav-link">Ingresar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="\Account\Create">Registrar</a>
+            </li>
+        }
+    </ul>

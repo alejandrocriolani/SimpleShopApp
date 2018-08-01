@@ -1,0 +1,57 @@
+﻿@using Almacen.Models.ViewModels
+@model RoleEditModel
+@{
+    ViewData["Title"] = "Editar Roles";
+}
+
+<div class="bg-primary p-1 m-1 text-white"><h4>@ViewData["Title"]</h4></div>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+    <h6 class="bg-info p-1 text-white">Añadir a @Model.Role.Name</h6>
+    <table class="table table-sm table-bordered">
+        @if(Model.NonMembers.Count() == 0)
+        { 
+            <tr><td colspan="2">Todos los usuarios son miembros</td></tr>
+        }
+        else
+        {
+            foreach(User user in Model.NonMembers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="IdsToAdd" value="@user.Id" />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <h6 class="bg-info p-1 text-white">Sacar de @Model.Role.Name</h6>
+    <table class="table table-sm table-bordered">
+       @if(Model.Members.Count() == 0)
+       {
+           <tr><td colspan="2">Ningún usuario es miembro</td></tr>
+       }
+       else
+       {
+           foreach(User user in Model.Members)
+           {
+               <tr>
+                   <td>@user.UserName</td>
+                   <td>
+                       <input type="checkbox" name="IdsToDelete" value="@user.Id" />
+                   </td>
+               </tr>
+           }
+       }
+    </table>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+

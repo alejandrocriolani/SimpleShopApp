@@ -1,0 +1,60 @@
+﻿@using Almacen.Models.ViewModels
+@model UserEditViewModel
+@{
+    ViewData["Title"] = "Editar tus datos";
+}
+
+<div class="bg-primary m-1 p-1 text-white"><h4>@ViewData["Title"]</h4></div>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl" />
+    </div>
+    <div class="form-group">
+        <label>Nombre de usuario</label>
+        <input disabled asp-for="UserName" class="form-control" value="@Model.UserName" />
+    </div>
+    <div class="form-group">
+        <label>Correo electrónico</label>
+        <input asp-for="Email" class="form-control" value="@Model.Email" />
+    </div>
+    <div class="form-group">
+        <label>Contraseña</label>
+        <input asp-for="Password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Nombre</label>
+        <input asp-for="Name" class="form-control" value="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <label>Apellido</label>
+        <input asp-for="LastName" class="form-control" value="@Model.LastName" />
+    </div>
+    <div class="form-group">
+        <label>DNI</label>
+        <input asp-for="DNI" class="form-control" value="@Model.DNI" />
+    </div>
+    <div class="form-group">
+        <label>Dirección</label>
+        <input asp-for="Address" class="form-control" value="@Model.Address" />
+    </div>
+    <div class="form-group">
+        <label>Ciudad</label>
+        <input asp-for="City" class="form-control" value="@Model.City" />
+    </div>
+    <div class="form-group">
+        <label>Código postal</label>
+        <input asp-for="ZipCode" class="form-control" value="@Model.ZipCode" />
+    </div>
+    <div class="form-group">
+        <label>Provincia</label>
+        <input asp-for="Province" class="form-control" value="@Model.Province" />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+

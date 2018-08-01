@@ -1,0 +1,30 @@
+﻿@using Almacen.Models.ViewModels
+@model LoginModel
+@{
+    ViewData["Title"] = "Ingresar";
+}
+
+<div class="bg-primary m-1 p-1 text-white"><h4>@ViewData["Title"]</h4></div>
+
+<div class="text-danger" asp-validation-summary="All"></div>
+
+<form asp-action="Login" method="post">
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+    <div class="text-center">
+        <div class="input-group m-1 justify-content-center">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-2x fa-user mr-2"></i>
+                    <input asp-for="Email" class="form-control" placeholder="Correo electrónico" />
+                </span>
+            </div>
+        </div>
+        <div class="input-group m-1 justify-content-center">
+            <div class="input-group-text">
+                <i class="fas fa-2x fa-lock mr-2"></i>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Ingresar</button>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+﻿@using Almacen.Models.ViewModels
+@model BasicOrderData
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<div class="bg-primary m-1 p-1 text-white"><h4>@ViewData["Title"]</h4></div>
+
+<div class="bg-dark p-1 text-white"><h5>Lista de compras</h5></div>
+<table class="table table-sm table-dark table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <td>Nombre</td>
+            <td>Marca</td>
+            <td>Cantidad</td>
+            <td>Precio Unitario</td>
+            <td>Precio Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.Order.Lines.Count() == 0)
+        {
+            <tr>
+                <td colspan="5">
+                    Error al obtener la lista de productos
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach(CartLine c in Model.Order.Lines)
+            {
+                <tr>
+                    <td>
+                        @c.Product.Name
+                    </td>
+                    <td>
+                        @c.Product.Brand
+                    </td>
+                    <td>
+                        @c.Quantity
+                    </td>
+                    <td>
+                        @c.Product.Price
+                    </td>
+                    <td>
+                        @(c.Quantity * c.Product.Price)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="text-left">Total</td>
+                <td>@Model.TotalPrice</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="bg-dark p-1 text-white"><h5>Datos de usuario</h5></div>
+@if(Model.Client != null)
+{
+    <table class="table table-dark table-sm table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <td>Atributo</td>
+                <td>Detalles</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="font-weight-bold">Apellido, Nombre</td>
+                <td>@(Model.Client.LastName + ", " + Model.Client.Name)</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">DNI</td>
+                <td>@Model.Client.DNI</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Provincia</td>
+                <td>@Model.Client.Province</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Ciudad</td>
+                <td>@Model.Client.City</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Dirección</td>
+                <td>@Model.Client.Address</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Código Postal</td>
+                <td>@Model.Client.ZipCode</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Correo Electrónico</td>
+                <td>@Model.Client.Email</td>
+            </tr>
+        </tbody>
+    </table>
+}
+

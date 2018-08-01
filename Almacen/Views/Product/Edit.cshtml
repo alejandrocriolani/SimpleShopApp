@@ -1,0 +1,58 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Editar producto";
+}
+
+<div class="bg-primary m-1 p-1 text-white">
+    <h4>
+        @if (Model.Id == null)
+        {
+            <span>Añadir producto</span>
+       }
+        else
+        {
+            <span>Editar producto</span>
+        }
+    </h4>
+</div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Nombre</label>
+        <div><span asp-validation-for="Name" class="text-danger"></span></div>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Marca</label>
+        <input asp-for="Brand" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Categoría</label>
+        <input asp-for="Category" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label>Descripción</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div>
+        <label>Cantidad</label>
+        <div><span asp-validation-for="Quantity" class="text-danger"></span></div>
+        <input asp-for="Quantity" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Precio al costo</label>
+        <span asp-validation-for="CostPrice" class="text-danger"></span>
+        <input asp-for="CostPrice" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Precio</label>
+        <span asp-validation-for="Price" class="text-danger"></span>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+

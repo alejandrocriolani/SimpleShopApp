@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/almacen.css" rel="stylesheet" />
+    <link href="~/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    </style>
+</head>
+<body class="m-1 p-1 bg-lightblue">
+    <nav class="navbar navbar-expand-md navbar-dark bg-darkblue sticky-top">
+        <a class="navbar-brand" href="\Home\Index">Inicio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       asp-route-page="1"
+                       class="nav-link">
+                        Productos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre Nosotros</a>
+                </li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="\Admin\Index">Administración</a>
+                    </li>
+                }
+            </ul>
+
+            @if (User.IsInRole("Client"))
+            {
+                @await Component.InvokeAsync("CartSummary")
+            }
+
+
+            @Html.Partial("LoginPartialView")
+
+        </div>
+    </nav>
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>
+    }
+    @RenderBody()
+    <footer>
+        <hr>
+        <div>Criolani Alejandro - 2018</div>
+    </footer>
+</body>
+</html>
